@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="produto.css">
+    <title>Producto</title>
+</head>
+<body>
+    <div class="producto" data-product-id="1">
+        <img src="imagen2/bol1.jpg" alt="Producto" class="product-image">
+        <h2 class="product-name">Nombre del Producto</h2>
+        <p class="product-price">Precio: $100</p>
+        <p class="product-description">Descripción del producto</p>
+        <button class="add-to-cart" data-product-id="1">Comprar</button>
+    </div>
+
+
+    <div class="producto" data-product-id="2">
+        <img src="imagen2/bol13.jpg" alt="Producto" class="product-image">
+        <h2 class="product-name">Nombre del Producto</h2>
+        <p class="product-price">Precio: $100</p>
+        <p class="product-description">Descripción del producto</p>
+        <button class="add-to-cart" data-product-id="2">Comprar</button>
+
+    </div>
+
+    <script>
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const productElement = this.closest('.producto');
+                const product = {
+                    productId: this.dataset.productId,
+                    productName: productElement.querySelector('.product-name').textContent,
+                    productPrice: parseFloat(productElement.querySelector('.product-price').textContent.replace('Precio: $', '')),
+                    productImage: productElement.querySelector('.product-image').src,
+                    productDescription: productElement.querySelector('.product-description').textContent
+                };
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push(product);
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                alert('Producto añadido al carrito');
+            });
+        });
+    </script>
+</body>
+</html>
